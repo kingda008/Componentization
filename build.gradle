@@ -17,3 +17,30 @@ buildscript {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task stringText{
+    def str1 = 'nihao'
+    def str2 = 'tianzhen'
+
+    println(str1+str2)
+
+    println "${str1} --- ${str2}"
+}
+
+task list{
+    def list = [1,2,3]
+    println list[1]
+    list.each{
+        println it
+    }
+}
+
+task map{
+    def map = ['name':'zhangsan','age':19]
+    println map['name']
+    map.each{
+        println "key is ${it.key},value is ${it.value}"
+    }
+}
+
+

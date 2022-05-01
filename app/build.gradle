@@ -20,21 +20,27 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     buildFeatures {
         viewBinding = true
     }
+    buildTypes {
+        debug{
+            buildConfigField 'String','url',getServerUrl("debug")
+        }
 
+        release {
+            buildConfigField 'String','url',getServerUrl("release")
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
 }
 
 dependencies {
@@ -59,3 +65,19 @@ dependencies {
     androidTestImplementation rootProject.depsLibs.test_ext_junit
     androidTestImplementation rootProject.depsLibs.test_espresso
 }
+
+//用groovy语法读取配置文件
+def getServerUrl(String str){
+    def url;
+    Properties properties = new Properties()
+    def proFile = file('src/main/filters/'+str+"/config.properties")
+    if(proFile.canRead()){
+        properties.load(new FileInputStream(proFile));
+        if(properties!=null){
+            url = properties['SERVER2']
+        }
+    }
+
+    url
+}
+

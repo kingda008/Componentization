@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding.btnLogin.setOnClickListener(this);
 
 
+        BuildConfig
     }
 
     @Override
